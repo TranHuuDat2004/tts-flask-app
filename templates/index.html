@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python TTS Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Text-to-Speech Generator</h1>
+        <p>Powered by Python, Flask, and Piper TTS</p>
+        
+        <div class="controls">
+            <label for="voice-select">Choose a voice:</label>
+            <select id="voice-select">
+                {% for voice_id, voice_name in voices.items() %}
+                    <option value="{{ voice_id }}">{{ voice_name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <textarea id="text-input" placeholder="Enter text to convert to speech..." rows="8"></textarea>
+        <button id="generate-btn">Generate Audio</button>
+        <div id="result-container">
+            <!-- Audio player will appear here -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateBtn = document.getElementById('generate-btn');
+            const textInput = document.getElementById('text-input');
+            const voiceSelect = document.getElementById('voice-select');
+            const resultContainer = document.getElementById('result-container');
+
+            generateBtn.addEventListener('click', function() {
+                const text = textInput.value.trim();
+                const voice = voiceSelect.value; // Lấy giọng đọc đã chọn
+
+                if (!text) {
+                    alert('Please enter some text.');
+                    return;
+                }
+
+                generateBtn.disabled = true;
+                generateBtn.textContent = 'Generating...';
+                resultContainer.innerHTML = '<p class="loading">Please wait, creating your audio...</p>';
+
+                // Gửi cả 'text' và 'voice' đến server
+                fetch('/generate', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ text: text, voice: voice }), 
+                })
+                .then(response => {
+                    if (!response.ok) { throw new Error('Network response was not ok.'); }
+                    return response.blob();
+                })
+                .then(blob => {
+                    const audioUrl = URL.createObjectURL(blob);
+                    resultContainer.innerHTML = `
+                        <audio controls autoplay>
+                            <source src="${audioUrl}" type="audio/wav">
+                        </audio>
+                    `;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultContainer.innerHTML = '<p class="error">Sorry, something went wrong. Please try again.</p>';
+                })
+                .finally(() => {
+                    generateBtn.disabled = false;
+                    generateBtn.textContent = 'Generate Audio';
+                });
+            });
+        });
+    </script>
+</body>
+</html>

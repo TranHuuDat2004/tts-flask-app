@@ -1,0 +1,150 @@
+/* static/style.css */
+
+/* --- General Styles --- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background-color: #f4f7f9;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* --- Main Container --- */
+.container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px;
+    }
+}
+
+
+/* --- Typography --- */
+h1 {
+    color: #0056b3;
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+p {
+    color: #6c757d;
+    margin-bottom: 25px;
+    font-size: 1.1em;
+}
+
+
+/* --- Form Elements --- */
+textarea {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    font-family: inherit;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    resize: vertical;
+    min-height: 120px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+button:disabled {
+    background-color: #5a6268;
+    cursor: not-allowed;
+    transform: none;
+}
+
+
+/* --- Result & Status Area --- */
+#result-container {
+    margin-top: 30px;
+    min-height: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+audio {
+    width: 100%;
+    border-radius: 50px; /* Bo tròn trình phát audio */
+}
+
+.loading, .error {
+    font-weight: bold;
+    font-size: 1.1em;
+    padding: 15px;
+    border-radius: 8px;
+    width: 100%;
+}
+
+.loading {
+    color: #17a2b8;
+    background-color: #e2f6f9;
+}
+
+.error {
+    color: #dc3545;
+    background-color: #f8d7da;
+}
+
+/* Thêm vào cuối file static/style.css */
+
+.controls {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+.controls label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #495057;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    font-size: 16px;
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    cursor: pointer;
+}
