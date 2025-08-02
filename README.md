@@ -96,4 +96,3 @@ tts-flask-app/
 ## 📝 Tác giả
 
 Dự án được phát triển bởi **Trần Hữu Đạt**.
-```
