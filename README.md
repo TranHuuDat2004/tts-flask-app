@@ -1,14 +1,3 @@
-### **Hướng dẫn:**
-
-1.  Trong repo `tts-flask-app` trên máy tính của bạn, tạo một file mới và đặt tên là `README.md`.
-2.  Copy toàn bộ nội dung bên dưới và dán vào file `README.md` đó.
-3.  Commit và push file này lên GitHub.
-
----
-
-### **Nội dung file `README.md`**
-
-```markdown
 # Flask Text-to-Speech (TTS) Web App with Piper
 
 Một ứng dụng web đơn giản, chạy trên máy tính cá nhân (local) để chuyển đổi văn bản thành giọng nói chất lượng cao bằng Python, Flask và công cụ mã nguồn mở Piper TTS.
