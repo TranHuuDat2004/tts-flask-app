@@ -13,8 +13,7 @@ app = Flask(__name__)
 AVAILABLE_VOICES = {
     "en_US-lessac-medium": "English (US, Male)",
     "en_US-kathleen-low": "English (US, Female)",
-    "en_GB-alan-medium": "English (UK, Male)",
-    "vi_VN-vivos-xuan-trang": "Vietnamese (Female)",
+    "en_GB-alan-medium": "English (UK, Male)"
 }
 VOICES_DIR = "piper_voices"
 OUTPUT_DIR = "output_audio"
