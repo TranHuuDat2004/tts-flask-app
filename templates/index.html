@@ -11,16 +11,26 @@
         <h1>Text-to-Speech Generator</h1>
         <p>Powered by Python, Flask, and Piper TTS</p>
         
-        <div class="controls">
-            <label for="voice-select">Choose a voice:</label>
-            <select id="voice-select">
-                {% for voice_id, voice_name in voices.items() %}
-                    <option value="{{ voice_id }}">{{ voice_name }}</option>
-                {% endfor %}
-            </select>
+        <!-- Bọc các control vào một nhóm -->
+        <div id="controls-group">
+            <div class="controls" id="voice-select-container">
+                <label for="voice-select">Choose a voice:</label>
+                <select id="voice-select">
+                    {% for voice_id, voice_name in voices.items() %}
+                        <option value="{{ voice_id }}">{{ voice_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <!-- THÊM CHECKBOX MỚI TẠI ĐÂY -->
+            <div class="controls">
+                <input type="checkbox" id="alternate-voices-checkbox" name="alternate-voices">
+                <label for="alternate-voices-checkbox">Alternate voices by paragraph (Male/Female)</label>
+            </div>
         </div>
 
-        <textarea id="text-input" placeholder="Enter text to convert to speech..." rows="8"></textarea>
+
+        <textarea id="text-input" placeholder="Enter text to convert to speech...&#10;Use new lines to create paragraphs.&#10;If 'Alternate voices' is checked, paragraph 1 will be male, 2 will be female, 3 will be male again, and so on." rows="8"></textarea>
         <button id="generate-btn">Generate Audio</button>
         <div id="result-container">
             <!-- Audio player will appear here -->
@@ -33,10 +43,24 @@
             const textInput = document.getElementById('text-input');
             const voiceSelect = document.getElementById('voice-select');
             const resultContainer = document.getElementById('result-container');
+            // Lấy các element mới
+            const alternateCheckbox = document.getElementById('alternate-voices-checkbox');
+            const voiceSelectContainer = document.getElementById('voice-select-container');
+
+            // Ẩn/hiện dropdown chọn giọng nói tùy thuộc vào checkbox
+            alternateCheckbox.addEventListener('change', function() {
+                if (this.checked) {
+                    voiceSelectContainer.style.display = 'none';
+                } else {
+                    voiceSelectContainer.style.display = 'block';
+                }
+            });
 
             generateBtn.addEventListener('click', function() {
                 const text = textInput.value.trim();
-                const voice = voiceSelect.value; // Lấy giọng đọc đã chọn
+                const voice = voiceSelect.value;
+                // Lấy trạng thái của checkbox
+                const alternate = alternateCheckbox.checked;
 
                 if (!text) {
                     alert('Please enter some text.');
@@ -47,14 +71,23 @@
                 generateBtn.textContent = 'Generating...';
                 resultContainer.innerHTML = '<p class="loading">Please wait, creating your audio...</p>';
 
-                // Gửi cả 'text' và 'voice' đến server
+                // Tạo payload để gửi đi
+                const payload = {
+                    text: text,
+                    voice: voice,
+                    alternate: alternate // Gửi trạng thái checkbox đến server
+                };
+
                 fetch('/generate', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ text: text, voice: voice }), 
+                    body: JSON.stringify(payload), // Gửi payload đã tạo
                 })
                 .then(response => {
-                    if (!response.ok) { throw new Error('Network response was not ok.'); }
+                    if (!response.ok) { 
+                        // Cố gắng đọc lỗi từ JSON nếu có
+                        return response.json().then(err => { throw new Error(err.error || 'Network response was not ok.') });
+                    }
                     return response.blob();
                 })
                 .then(blob => {
@@ -67,7 +100,8 @@
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    resultContainer.innerHTML = '<p class="error">Sorry, something went wrong. Please try again.</p>';
+                    // Hiển thị thông báo lỗi cụ thể hơn nếu có
+                    resultContainer.innerHTML = `<p class="error">Sorry, something went wrong: ${error.message}. Please try again.</p>`;
                 })
                 .finally(() => {
                     generateBtn.disabled = false;

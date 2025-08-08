@@ -148,3 +148,17 @@ select {
     background-color: #fff;
     cursor: pointer;
 }
+
+/* Thêm vào cuối file static/style.css */
+.instructions {
+    background-color: #e9f5ff;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    text-align: left;
+    border-left: 4px solid #007bff;
+}
+.instructions strong {
+    display: block;
+    margin-bottom: 5px;
+}
