@@ -114,4 +114,7 @@ def generate():
         return jsonify({"error": "Failed to generate audio."}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # Lấy cổng từ biến môi trường của Render, nếu không có thì mặc định là 5000
+    port = int(os.environ.get('PORT', 5000))
+    # Chạy server trên host 0.0.0.0 để Render có thể truy cập
+    app.run(host='0.0.0.0', port=port, debug=True)
