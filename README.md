@@ -17,7 +17,7 @@ Dự án này được tạo ra nhằm cung cấp một giải pháp Text-to-Spe
 -   **Hỗ trợ đa giọng đọc:** Dễ dàng cấu hình để thêm nhiều giọng đọc khác nhau. Phiên bản hiện tại hỗ trợ:
     -   Tiếng Anh (Mỹ) - Nam & Nữ
     -   Tiếng Anh (Anh) - Nam
-    -   Tiếng Việt - Nữ (Giọng miền Nam)
+
 -   **Tự động tải Model:** Script sẽ tự động kiểm tra và tải về các "model giọng đọc" cần thiết từ Hugging Face trong lần chạy đầu tiên.
 -   **Tạo Audio nhanh chóng:** Nhận văn bản từ người dùng, xử lý ở backend và trả về file audio để nghe trực tiếp trên trình duyệt.
 
