@@ -15,6 +15,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy toàn bộ mã nguồn vào container
 COPY --chown=user:user . .
+RUN mkdir -p /app/audio && chown -R user:user /app/audio
 
 # Đổi sang user vừa tạo
 USER user
